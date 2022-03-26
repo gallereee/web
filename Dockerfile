@@ -11,7 +11,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # Create app directory
 WORKDIR /app
 # Install app dependencies
-COPY ["package.json", "package-lock.json", ".npmrc", "./"]
+COPY ["package.json", "package-lock.json", ".npmrc", ".env.local", "./"]
 RUN npm ci
 # Remove token-related stuff
 RUN rm -f .npmrc
