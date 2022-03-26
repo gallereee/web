@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { config } from "config";
-import { Account, AccountUsername, Post } from "api/accounts/types";
+import { Account, AccountPost, AccountUsername } from "api/accounts/types";
 
 const accountsApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: `${config.api.host}/accounts` }),
@@ -8,7 +8,7 @@ const accountsApi = createApi({
 		getAccount: build.query<Account, AccountUsername>({
 			query: (username) => `/${username}`,
 		}),
-		getAccountPosts: build.query<Post[], AccountUsername>({
+		getAccountPosts: build.query<AccountPost[], AccountUsername>({
 			query: (username) => `/${username}/posts`,
 		}),
 	}),

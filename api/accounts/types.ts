@@ -1,5 +1,6 @@
-type PostId = number;
-type PhotoId = number;
+import { PostId } from "api/posts";
+import { PhotoId } from "api/photos";
+
 type AccountId = number;
 type AccountUsername = string;
 
@@ -8,28 +9,11 @@ interface Account {
 	username: AccountUsername;
 }
 
-interface Photo {
-	id: PhotoId;
-	postId: PostId;
-	createdAt: string;
-	updatedAt: string;
-}
-
-interface Post {
+interface AccountPost {
 	id: PostId;
-	groupId: string;
-	accountId: number;
 	createdAt: string;
 	updatedAt: string;
-	photos: Photo[];
+	coverPhotoId: PhotoId;
 }
 
-export type {
-	Account,
-	Photo,
-	Post,
-	PostId,
-	PhotoId,
-	AccountId,
-	AccountUsername,
-};
+export type { Account, AccountPost, AccountId, AccountUsername };

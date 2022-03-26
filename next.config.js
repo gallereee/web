@@ -2,7 +2,7 @@
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ["api.gallereee.bd-dm.site"],
+		domains: ["api.gallereee.bd-dm.site", "localhost"],
 	},
 };
 

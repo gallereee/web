@@ -1,24 +1,18 @@
 import { VFC } from "react";
-import { Post } from "api";
 import Image from "next/image";
 import { config } from "config";
+import { AccountPost } from "api";
 import styles from "./index.module.scss";
 
 interface PostsListItemProps {
-	post: Post;
+	post: AccountPost;
 }
 
-const PostsListItem: VFC<PostsListItemProps> = ({
-	post: {
-		photos: [photo],
-	},
-}) => {
-	const photoId = photo.id;
-
+const PostsListItem: VFC<PostsListItemProps> = ({ post: { coverPhotoId } }) => {
 	return (
 		<li className={styles.item}>
 			<Image
-				src={`${config.api.host}/photos/${photoId}/file`}
+				src={`${config.api.host}/photos/${coverPhotoId}/file`}
 				layout="fill"
 				objectFit="cover"
 			/>
