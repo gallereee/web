@@ -1,8 +1,18 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import "@bd-dm/ui/dist/index.css";
+import "../styles/index.css";
+import { Layout, UI, useDeviceTheme } from "@bd-dm/ui";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }: AppProps) => {
+	const theme = useDeviceTheme();
 
-export default MyApp
+	return (
+		<UI theme={theme}>
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</UI>
+	);
+};
+
+export default App;
