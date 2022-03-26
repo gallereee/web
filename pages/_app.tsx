@@ -1,17 +1,23 @@
 import type { AppProps } from "next/app";
 import "@bd-dm/ui/dist/index.css";
 import "../styles/index.css";
-import { Layout, UI, useDeviceTheme } from "@bd-dm/ui";
+import { Container, Layout, UI, useDeviceTheme } from "@bd-dm/ui";
+import { Provider } from "react-redux";
+import { store } from "store";
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const theme = useDeviceTheme();
 
 	return (
-		<UI theme={theme}>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
-		</UI>
+		<Provider store={store}>
+			<UI theme={theme}>
+				<Layout>
+					<Container>
+						<Component {...pageProps} />
+					</Container>
+				</Layout>
+			</UI>
+		</Provider>
 	);
 };
 
