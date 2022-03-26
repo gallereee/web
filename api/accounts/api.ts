@@ -1,19 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { config } from "config";
 import { Account, AccountPost, AccountUsername } from "api/accounts/types";
+import { api } from "api/baseApi";
 
-const accountsApi = createApi({
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.api.host}/accounts` }),
+const accountsApi = api.injectEndpoints({
+	overrideExisting: false,
 	endpoints: (build) => ({
 		getAccount: build.query<Account, AccountUsername>({
-			query: (username) => `/${username}`,
+			query: (username) => `accounts/${username}`,
 		}),
 		getAccountPosts: build.query<AccountPost[], AccountUsername>({
-			query: (username) => `/${username}/posts`,
+			query: (username) => `accounts/${username}/posts`,
 		}),
 	}),
 });
 
 const { useGetAccountQuery, useGetAccountPostsQuery } = accountsApi;
 
-export { useGetAccountQuery, useGetAccountPostsQuery, accountsApi };
+export { useGetAccountQuery, useGetAccountPostsQuery };
