@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import { Font } from "@bd-dm/ui";
+import { Landing } from "../components/Landing";
 
 const Home: NextPage = () => {
-	return <Font>Gallereee</Font>;
+	return <Landing />;
 };
 
 export default Home;

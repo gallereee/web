@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Column, Font } from "@bd-dm/ui";
 import Head from "next/head";
 import { isUndefined } from "lodash";
-import { PostsList } from "components";
+import { PostsList } from "components/PostsList";
 import styles from "./index.module.scss";
 
 const AccountPage: NextPage = () => {

@@ -1,0 +1,73 @@
+@use "~@bd-dm/ui/dist/styles/functions";
+@use "~@bd-dm/ui/dist/styles/mixins";
+@use "sass:math";
+
+.container {
+	padding-top: functions.grid(8);
+	height: 100%;
+	gap: functions.grid(13);
+}
+
+.description {
+	gap: functions.grid(4);
+
+	@include mixins.themed("background-color", "accent-light");
+	@include mixins.body-padding-disable;
+	@include mixins.body-padding;
+
+	padding-top: functions.grid(8);
+	padding-bottom: functions.grid(12);
+}
+
+.head {
+	gap: functions.grid(5);
+}
+
+.body {
+	gap: functions.grid(8);
+}
+
+.logo {
+	font-size: 5em;
+}
+
+.title {
+	text-align: center;
+	font-size: 2.6em !important;
+}
+
+.slogan {
+	text-align: center;
+}
+
+.points {
+	display: grid;
+	gap: functions.grid(2);
+	grid-template-columns: repeat(3, 1fr);
+
+	li {
+		padding: functions.grid(2);
+		border-radius: functions.grid(1);
+		text-align: center;
+
+		@include mixins.themed("background-color", "accent-opposite");
+	}
+
+	li.point-good {
+		@include mixins.themed("background-color", "accent");
+		@include mixins.themed("color", "accent-opposite");
+
+		grid-column: 1 / 4;
+	}
+}
+
+.action-button {
+	display: flex !important;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+
+	&-icon {
+		margin-left: functions.grid(2);
+	}
+}

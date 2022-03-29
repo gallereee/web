@@ -1,4 +1,5 @@
+@use "~@bd-dm/ui/dist/styles/mixins";
+
 .list {
-	// TODO: import mixin from @bd-dm/ui
-	margin: 0 -16px
+	@include mixins.body-padding-disable;
 }

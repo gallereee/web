@@ -5,6 +5,7 @@ import { Container, Layout, UI, useDeviceTheme } from "@bd-dm/ui";
 import { Provider } from "react-redux";
 import { store } from "store";
 import Head from "next/head";
+import styles from "./_app.module.scss";
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const theme = useDeviceTheme();
@@ -13,7 +14,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 		<Provider store={store}>
 			<UI theme={theme}>
 				<Layout>
-					<Container>
+					<Container className={styles.container}>
 						<Head>
 							<title>Gallereee</title>
 							<link rel="icon" href="/favicon.svg" />
