@@ -1,0 +1,9 @@
+@use "~@bd-dm/ui/dist/styles/mixins";
+
+.accent-circle {
+	@include mixins.themed("fill", "accent");
+}
+
+.accent-opposite-circle {
+	@include mixins.themed("fill", "accent-opposite");
+}
