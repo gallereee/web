@@ -6,10 +6,12 @@ LABEL org.opencontainers.image.source="https://github.com/gallereee/web"
 # Set github token required to fetch packages
 ARG github_token
 ARG api_host
+ARG bot_url
 
 ENV GITHUB_TOKEN $github_token
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NEXT_PUBLIC_API_HOST $api_host
+ENV NEXT_PUBLIC_BOT_URL $bot_url
 
 # Create app directory
 WORKDIR /app
