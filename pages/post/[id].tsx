@@ -1,23 +1,48 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Column } from "@bd-dm/ui";
-import { isUndefined } from "lodash";
+import { Column, SpinnerIcon } from "@bd-dm/ui";
+import { isString, isUndefined } from "lodash";
 import { PostPhotos } from "components/PostPhotos";
+import { getPost, getRunningOperationPromises, useGetPostQuery } from "api";
+import { storeWrapper } from "store";
 
 const PostPage: NextPage = () => {
 	const {
 		query: { id },
 	} = useRouter();
 
-	if (isUndefined(id)) {
+	const { data: post, isLoading } = useGetPostQuery(id as string, {
+		skip: isUndefined(id),
+	});
+
+	if (isLoading) {
+		return <SpinnerIcon />;
+	}
+
+	if (isUndefined(post)) {
 		return null;
 	}
 
 	return (
 		<Column>
-			<PostPhotos id={id as string} />
+			<PostPhotos photos={post.photos} />
 		</Column>
 	);
 };
 
+const getServerSideProps = storeWrapper.getServerSideProps(
+	(store) => async (context) => {
+		const { id } = context.query;
+		if (isString(id)) {
+			store.dispatch(getPost.initiate(id));
+		}
+		await Promise.all(getRunningOperationPromises());
+
+		return {
+			props: {},
+		};
+	}
+);
+
+export { getServerSideProps };
 export default PostPage;

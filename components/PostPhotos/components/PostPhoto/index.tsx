@@ -1,20 +1,22 @@
 import { VFC } from "react";
-import { PhotoId } from "api/photos";
+import { PostPhoto as PostPhotoType } from "api/posts";
 import Image from "next/image";
 import { config } from "config";
 import styles from "./index.module.scss";
 
 interface PostPhotoProps {
-	id: PhotoId;
+	photo: PostPhotoType;
 }
 
-const PostPhoto: VFC<PostPhotoProps> = ({ id }) => {
+const PostPhoto: VFC<PostPhotoProps> = ({ photo: { id, width, height } }) => {
 	return (
 		<li className={styles.item}>
 			<Image
 				src={`${config.api.host}/photos/${id}/file`}
-				layout="fill"
-				objectFit="cover"
+				layout="responsive"
+				width={width}
+				height={height}
+				priority
 			/>
 		</li>
 	);

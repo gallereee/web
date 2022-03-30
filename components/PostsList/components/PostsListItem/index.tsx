@@ -18,7 +18,8 @@ const PostsListItem: VFC<PostsListItemProps> = ({
 				<a className={styles.button}>
 					<Image
 						src={`${config.api.host}/photos/${coverPhotoId}/file`}
-						layout="fill"
+						width={300}
+						height={300}
 						objectFit="cover"
 						priority
 					/>

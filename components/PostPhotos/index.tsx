@@ -1,30 +1,17 @@
 import { VFC } from "react";
-import { PostId } from "api/posts";
-import { SpinnerIcon } from "@bd-dm/ui";
-import { isUndefined } from "lodash";
-import { useGetPostQuery } from "api";
 import { PostPhoto } from "components/PostPhotos/components";
+import { PostPhoto as PostPhotoType } from "api/posts";
 import styles from "./index.module.scss";
 
 interface PostPhotosProps {
-	id: PostId;
+	photos: PostPhotoType[];
 }
 
-const PostPhotos: VFC<PostPhotosProps> = ({ id }) => {
-	const { data: post, isLoading } = useGetPostQuery(id);
-
-	if (isLoading) {
-		return <SpinnerIcon />;
-	}
-
-	if (isUndefined(post)) {
-		return null;
-	}
-
+const PostPhotos: VFC<PostPhotosProps> = ({ photos }) => {
 	return (
 		<ul className={styles.list}>
-			{post.photoIds.map((photoId) => (
-				<PostPhoto key={photoId} id={photoId} />
+			{photos.map((photo) => (
+				<PostPhoto key={photo.id} photo={photo} />
 			))}
 		</ul>
 	);

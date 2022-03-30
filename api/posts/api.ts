@@ -11,5 +11,6 @@ const postsApi = api.injectEndpoints({
 });
 
 const { useGetPostQuery } = postsApi;
+const { getPost } = postsApi.endpoints;
 
-export { useGetPostQuery };
+export { getPost, useGetPostQuery };
