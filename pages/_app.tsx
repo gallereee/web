@@ -2,29 +2,32 @@ import type { AppProps } from "next/app";
 import "@bd-dm/ui/dist/index.css";
 import "../styles/index.css";
 import { Container, Layout, UI, useDeviceTheme } from "@bd-dm/ui";
-import { Provider } from "react-redux";
-import { store } from "store";
 import Head from "next/head";
+import { storeWrapper } from "store";
+import AbortController from "abort-controller";
 import styles from "./_app.module.scss";
+
+// eslint-disable-next-line no-undef
+Object.assign(globalThis, {
+	AbortController,
+});
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const theme = useDeviceTheme();
 
 	return (
-		<Provider store={store}>
-			<UI theme={theme}>
-				<Layout>
-					<Container className={styles.container}>
-						<Head>
-							<title>Gallereee</title>
-							<link rel="icon" href="/favicon.svg" />
-						</Head>
-						<Component {...pageProps} />
-					</Container>
-				</Layout>
-			</UI>
-		</Provider>
+		<UI theme={theme}>
+			<Layout>
+				<Container className={styles.container}>
+					<Head>
+						<title>Gallereee</title>
+						<link rel="icon" href="/favicon.svg" />
+					</Head>
+					<Component {...pageProps} />
+				</Container>
+			</Layout>
+		</UI>
 	);
 };
 
-export default App;
+export default storeWrapper.withRedux(App);

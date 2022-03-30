@@ -20,6 +20,7 @@ const PostsListItem: VFC<PostsListItemProps> = ({
 						src={`${config.api.host}/photos/${coverPhotoId}/file`}
 						layout="fill"
 						objectFit="cover"
+						priority
 					/>
 				</a>
 			</Link>

@@ -1,27 +1,13 @@
 import { VFC } from "react";
 import { PostsListItem } from "components/PostsList/components";
-import { AccountUsername, useGetAccountPostsQuery } from "api";
-import { SpinnerIcon } from "@bd-dm/ui";
-import { isUndefined } from "lodash";
+import { AccountPost } from "api";
 import styles from "./index.module.scss";
 
 interface PostsListProps {
-	username: AccountUsername;
+	posts: AccountPost[];
 }
 
-const PostsList: VFC<PostsListProps> = ({ username }) => {
-	const { data: posts, isLoading } = useGetAccountPostsQuery(
-		username as string
-	);
-
-	if (isLoading) {
-		return <SpinnerIcon />;
-	}
-
-	if (isUndefined(posts)) {
-		return null;
-	}
-
+const PostsList: VFC<PostsListProps> = ({ posts }) => {
 	return (
 		<ul className={styles.list}>
 			{posts.map((post) => (

@@ -14,5 +14,11 @@ const accountsApi = api.injectEndpoints({
 });
 
 const { useGetAccountQuery, useGetAccountPostsQuery } = accountsApi;
+const { getAccountPosts, getAccount } = accountsApi.endpoints;
 
-export { useGetAccountQuery, useGetAccountPostsQuery };
+export {
+	getAccount,
+	useGetAccountQuery,
+	getAccountPosts,
+	useGetAccountPostsQuery,
+};

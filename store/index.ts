@@ -1,23 +1,28 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "api";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { createWrapper } from "next-redux-wrapper";
+import { config } from "../config";
 
-export const store = configureStore({
-	reducer: {
-		[api.reducerPath]: api.reducer,
-	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(api.middleware),
-});
+export const makeStore = () =>
+	configureStore({
+		reducer: {
+			[api.reducerPath]: api.reducer,
+		},
+		middleware: (getDefaultMiddleware) =>
+			getDefaultMiddleware().concat(api.middleware),
+	});
 
-setupListeners(store.dispatch);
-
-type RootState = ReturnType<typeof store.getState>;
-type AppDispatch = typeof store.dispatch;
+type AppStore = ReturnType<typeof makeStore>;
+type RootState = ReturnType<AppStore["getState"]>;
+type AppDispatch = AppStore["dispatch"];
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export type { RootState, AppDispatch };
-export { useAppDispatch, useAppSelector };
+const storeWrapper = createWrapper<AppStore>(makeStore, {
+	debug: config.isDebuggingSSR,
+});
+
+export type { AppStore, RootState, AppDispatch };
+export { useAppDispatch, useAppSelector, storeWrapper };
