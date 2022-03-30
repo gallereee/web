@@ -60,7 +60,15 @@ const getServerSideProps = storeWrapper.getServerSideProps(
 			store.dispatch(getAccount.initiate(username));
 			store.dispatch(getAccountPosts.initiate(username));
 		}
-		await Promise.all(getRunningOperationPromises());
+		const [getAccountResult] = await Promise.all<any>(
+			getRunningOperationPromises()
+		);
+
+		if (getAccountResult.isError && getAccountResult.error?.status === 404) {
+			return {
+				notFound: true,
+			};
+		}
 
 		return {
 			props: {},

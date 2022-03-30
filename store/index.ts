@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "api";
 import { createWrapper } from "next-redux-wrapper";
-import { config } from "../config";
+import { config } from "config";
 
 export const makeStore = () =>
 	configureStore({

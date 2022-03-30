@@ -36,7 +36,15 @@ const getServerSideProps = storeWrapper.getServerSideProps(
 		if (isString(id)) {
 			store.dispatch(getPost.initiate(id));
 		}
-		await Promise.all(getRunningOperationPromises());
+		const [getPostResult] = await Promise.all<any>(
+			getRunningOperationPromises()
+		);
+
+		if (getPostResult.isError && getPostResult.error?.status === 404) {
+			return {
+				notFound: true,
+			};
+		}
 
 		return {
 			props: {},
