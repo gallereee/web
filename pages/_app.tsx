@@ -1,6 +1,8 @@
-import type { AppProps } from "next/app";
 import "@bd-dm/ui/dist/index.css";
+import "@bd-dm/ui/dist/globals.css";
 import "../styles/index.css";
+
+import type { AppProps } from "next/app";
 import { Container, Layout, UI, useDeviceTheme } from "@bd-dm/ui";
 import Head from "next/head";
 import { storeWrapper } from "store";
