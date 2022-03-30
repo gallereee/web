@@ -1,4 +1,6 @@
+@use "~@bd-dm/ui/dist/styles/functions";
+
 .column {
-	padding-top: 20px;
-	gap: 20px;
+	padding-top: functions.grid(5);
+	gap: functions.grid(5);
 }

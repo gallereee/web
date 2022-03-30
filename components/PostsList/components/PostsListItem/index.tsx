@@ -3,6 +3,7 @@ import Image from "next/image";
 import { config } from "config";
 import { AccountPost } from "api";
 import Link from "next/link";
+import { blurImageBase64 } from "stubs/blurImageBase64";
 import styles from "./index.module.scss";
 
 interface PostsListItemProps {
@@ -20,8 +21,10 @@ const PostsListItem: VFC<PostsListItemProps> = ({
 						src={`${config.api.host}/photos/${coverPhotoId}/file`}
 						width={300}
 						height={300}
-						objectFit="cover"
 						priority
+						objectFit="cover"
+						placeholder="blur"
+						blurDataURL={blurImageBase64}
 					/>
 				</a>
 			</Link>
