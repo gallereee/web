@@ -2,8 +2,8 @@
 @use "~@bd-dm/ui/dist/styles/mixins";
 
 .container {
-	padding-top: functions.grid(4);
-	gap: functions.grid(4);
+	padding-top: functions.grid(5);
+	gap: functions.grid(5);
 }
 
 .date {

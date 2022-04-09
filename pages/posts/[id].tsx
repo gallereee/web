@@ -33,7 +33,9 @@ const PostPage: NextPage = () => {
 	return (
 		<Column className={styles.container}>
 			<Row verticalAlignment={Row.VerticalAlignment.CENTER}>
-				<Font type={Font.Type.H2}>{username}</Font>
+				<a href={`/accounts/${username}`}>
+					<Font type={Font.Type.H2}>{username}</Font>
+				</a>
 				<Font className={styles.date}>{formatDate(createdAt)}</Font>
 			</Row>
 			<PostPhotos photos={post.photos} />

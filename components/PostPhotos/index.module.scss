@@ -1,5 +1,5 @@
 @use "~@bd-dm/ui/dist/styles/mixins";
 
-.list {
+.container {
 	@include mixins.body-padding-disable;
 }

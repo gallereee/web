@@ -10,7 +10,7 @@ interface PostPhotoProps {
 
 const PostPhoto: VFC<PostPhotoProps> = ({ photo: { id, width, height } }) => {
 	return (
-		<li className={styles.item}>
+		<div className={styles.item}>
 			<Image
 				src={`${config.api.host}/photos/${id}/file`}
 				layout="responsive"
@@ -18,7 +18,7 @@ const PostPhoto: VFC<PostPhotoProps> = ({ photo: { id, width, height } }) => {
 				height={height}
 				priority
 			/>
-		</li>
+		</div>
 	);
 };
 
