@@ -1,10 +1,12 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Column, SpinnerIcon } from "@bd-dm/ui";
+import { Column, Font, Row, SpinnerIcon } from "@bd-dm/ui";
 import { isString, isUndefined } from "lodash";
 import { PostPhotos } from "components/PostPhotos";
 import { getPost, getRunningOperationPromises, useGetPostQuery } from "api";
 import { storeWrapper } from "store";
+import { formatDate } from "utils";
+import styles from "./index.module.scss";
 
 const PostPage: NextPage = () => {
 	const {
@@ -23,8 +25,17 @@ const PostPage: NextPage = () => {
 		return null;
 	}
 
+	const {
+		account: { username },
+		createdAt,
+	} = post;
+
 	return (
-		<Column>
+		<Column className={styles.container}>
+			<Row verticalAlignment={Row.VerticalAlignment.CENTER}>
+				<Font type={Font.Type.H2}>{username}</Font>
+				<Font className={styles.date}>{formatDate(createdAt)}</Font>
+			</Row>
 			<PostPhotos photos={post.photos} />
 		</Column>
 	);

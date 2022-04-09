@@ -1,4 +1,5 @@
 import { PhotoId } from "api/photos";
+import { Account } from "api/accounts";
 
 type PostId = string;
 
@@ -15,4 +16,6 @@ interface Post {
 	photos: PostPhoto[];
 }
 
-export type { PostId, Post, PostPhoto };
+type PostWithAccount = Post & { account: Account };
+
+export type { PostId, Post, PostWithAccount, PostPhoto };

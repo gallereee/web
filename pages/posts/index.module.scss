@@ -1,0 +1,12 @@
+@use "~@bd-dm/ui/dist/styles/functions";
+@use "~@bd-dm/ui/dist/styles/mixins";
+
+.container {
+	padding-top: functions.grid(4);
+	gap: functions.grid(4);
+}
+
+.date {
+	margin-left: functions.grid(4);
+	@include mixins.themed("color", "accent-disabled");
+}
