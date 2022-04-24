@@ -1,4 +1,4 @@
-interface AuthTelegramRequest {
+interface AuthTelegramSeamlessRequest {
 	id: string;
 	hash: string;
 	first_name: string;
@@ -8,7 +8,18 @@ interface AuthTelegramRequest {
 	username: string;
 }
 
-interface AuthTelegramResponse {
+interface AuthTelegramSeamlessResponse {
+	accessToken: string;
+}
+
+interface AuthTelegramWebAppRequest {
+	query_id: string;
+	hash: string;
+	user: string;
+	auth_date: string;
+}
+
+interface AuthTelegramWebAppResponse {
 	accessToken: string;
 }
 
@@ -20,8 +31,10 @@ interface AuthJwtPayload {
 type AuthJwtToken = string;
 
 export type {
-	AuthTelegramRequest,
-	AuthTelegramResponse,
+	AuthTelegramSeamlessRequest,
+	AuthTelegramSeamlessResponse,
+	AuthTelegramWebAppRequest,
+	AuthTelegramWebAppResponse,
 	AuthJwtPayload,
 	AuthJwtToken,
 };

@@ -1,12 +1,30 @@
 import { api } from "api/baseApi";
-import { AuthTelegramRequest, AuthTelegramResponse } from "./types";
+import {
+	AuthTelegramSeamlessRequest,
+	AuthTelegramSeamlessResponse,
+	AuthTelegramWebAppRequest,
+	AuthTelegramWebAppResponse,
+} from "./types";
 
 const authApi = api.injectEndpoints({
 	overrideExisting: false,
 	endpoints: (build) => ({
-		authTelegram: build.mutation<AuthTelegramResponse, AuthTelegramRequest>({
+		authTelegramSeamless: build.mutation<
+			AuthTelegramSeamlessResponse,
+			AuthTelegramSeamlessRequest
+		>({
 			query: (body) => ({
-				url: "auth/telegram",
+				url: "auth/telegram/seamless",
+				method: "POST",
+				body,
+			}),
+		}),
+		authTelegramWebApp: build.mutation<
+			AuthTelegramWebAppResponse,
+			AuthTelegramWebAppRequest
+		>({
+			query: (body) => ({
+				url: "auth/telegram/web-app",
 				method: "POST",
 				body,
 			}),
@@ -14,6 +32,7 @@ const authApi = api.injectEndpoints({
 	}),
 });
 
-const { useAuthTelegramMutation } = authApi;
+const { useAuthTelegramSeamlessMutation, useAuthTelegramWebAppMutation } =
+	authApi;
 
-export { useAuthTelegramMutation };
+export { useAuthTelegramSeamlessMutation, useAuthTelegramWebAppMutation };

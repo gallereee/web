@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useAuthTelegramMutation } from "api/auth";
+import { useAuthTelegramSeamlessMutation } from "api/auth";
 import { useEffect } from "react";
 import { isEmpty, isUndefined } from "lodash";
 import { saveAuth } from "utils/auth";
@@ -9,7 +9,7 @@ import { auth } from "store/reducers/auth";
 
 const AuthTelegramSeamless: NextPage = () => {
 	const { query, push } = useRouter();
-	const [authTelegram, { data: authData }] = useAuthTelegramMutation();
+	const [authTelegram, { data: authData }] = useAuthTelegramSeamlessMutation();
 	const dispatch = useAppDispatch();
 
 	const authFields = {
