@@ -1,6 +1,12 @@
 @use "~@bd-dm/ui/dist/styles/functions";
+@use "~@bd-dm/ui/dist/styles/mixins";
 
 .column {
 	padding-top: functions.grid(5);
 	gap: functions.grid(5);
+}
+
+.youSign {
+	margin-left: functions.grid(4);
+	@include mixins.themed("color", "accent-disabled");
 }

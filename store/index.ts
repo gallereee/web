@@ -3,10 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "api";
 import { createWrapper } from "next-redux-wrapper";
 import { config } from "config";
+import { authSlice } from "store/reducers/auth";
 
 export const makeStore = () =>
 	configureStore({
 		reducer: {
+			auth: authSlice.reducer,
 			[api.reducerPath]: api.reducer,
 		},
 		middleware: (getDefaultMiddleware) =>

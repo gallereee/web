@@ -7,6 +7,7 @@ import { Container, Layout, UI, useDeviceTheme } from "@bd-dm/ui";
 import Head from "next/head";
 import { storeWrapper } from "store";
 import AbortController from "abort-controller";
+import { AuthProvider } from "components/AuthProvider";
 import styles from "./_app.module.scss";
 
 // eslint-disable-next-line no-undef
@@ -20,13 +21,15 @@ const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<UI theme={theme}>
 			<Layout>
-				<Container className={styles.container}>
-					<Head>
-						<title>Gallereee</title>
-						<link rel="icon" href="/favicon.svg" />
-					</Head>
-					<Component {...pageProps} />
-				</Container>
+				<AuthProvider>
+					<Container className={styles.container}>
+						<Head>
+							<title>Gallereee</title>
+							<link rel="icon" href="/favicon.svg" />
+						</Head>
+						<Component {...pageProps} />
+					</Container>
+				</AuthProvider>
 			</Layout>
 		</UI>
 	);

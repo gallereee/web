@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Column, Font, SpinnerIcon } from "@bd-dm/ui";
+import { Column, Font, Row, SpinnerIcon } from "@bd-dm/ui";
 import Head from "next/head";
 import { isString, isUndefined } from "lodash";
 import { PostsList } from "components/PostsList";
@@ -11,7 +11,7 @@ import {
 	useGetAccountPostsQuery,
 	useGetAccountQuery,
 } from "api";
-import { storeWrapper } from "store";
+import { storeWrapper, useAppSelector } from "store";
 import styles from "./index.module.scss";
 
 const AccountPage: NextPage = () => {
@@ -23,6 +23,7 @@ const AccountPage: NextPage = () => {
 			skip: isUndefined(query.username),
 		}
 	);
+	const authUsername = useAppSelector((state) => state.auth.username);
 	const { data: posts, isLoading: isGetAccountPostsLoading } =
 		useGetAccountPostsQuery(query.username as string, {
 			skip: isUndefined(query.username),
@@ -46,7 +47,12 @@ const AccountPage: NextPage = () => {
 				<title>{username} - Gallereee</title>
 			</Head>
 			<Column className={styles.column}>
-				<Font type={Font.Type.H2}>{username}</Font>
+				<Row verticalAlignment={Row.VerticalAlignment.CENTER}>
+					<Font type={Font.Type.H2}>{username}</Font>
+					{authUsername === username ? (
+						<Font className={styles.youSign}>Вы</Font>
+					) : null}
+				</Row>
 				<PostsList posts={posts} />
 			</Column>
 		</>
