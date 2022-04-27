@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { Font } from "@bd-dm/ui";
 import {
 	AuthTelegramWebAppRequest,
 	useAuthTelegramWebAppMutation,
@@ -26,18 +26,17 @@ const AuthTelegramWebApp: NextPage = () => {
 	const [initData, setInitData] = useState<
 		AuthTelegramWebAppRequest | undefined
 	>();
-	const { push } = useRouter();
 	const [authTelegram, { data: authData }] = useAuthTelegramWebAppMutation();
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		// @ts-ignore
-		const webAppInitData = window.Telegram.WebApp.initData;
-		if (isEmpty(webAppInitData)) {
+		const newInitDataString = window.Telegram.WebApp.initData;
+		if (isEmpty(newInitDataString)) {
 			return;
 		}
 
-		const initDataObject = getInitData(webAppInitData);
+		const initDataObject = getInitData(newInitDataString);
 
 		setInitData(initDataObject);
 		authTelegram(initDataObject);
@@ -53,12 +52,14 @@ const AuthTelegramWebApp: NextPage = () => {
 				return;
 			}
 
-			const userString = decodeURI(initData.user);
+			const userString = decodeURIComponent(initData.user);
 			const user = JSON.parse(userString);
 
 			await saveAuth(authData.accessToken);
 			dispatch(auth(authData.accessToken));
-			await push(`/accounts/${user.username}`);
+
+			// eslint-disable-next-line no-restricted-globals
+			location.href = `/accounts/${user.username}`;
 		})();
 	}, [authData, initData]);
 
@@ -68,7 +69,7 @@ const AuthTelegramWebApp: NextPage = () => {
 				<script src="https://telegram.org/js/telegram-web-app.js" />
 			</Head>
 			<div>
-				<p>Telegram initData: {JSON.stringify(initData || "")}</p>
+				<Font>Wait for redirect...</Font>
 			</div>
 		</>
 	);
