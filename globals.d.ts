@@ -1,3 +1,5 @@
+export default null;
+
 declare global {
 	interface Window {
 		Telegram: {

@@ -21,6 +21,7 @@ interface AuthTelegramWebAppRequest {
 
 interface AuthTelegramWebAppResponse {
 	accessToken: string;
+	accountUsername: string;
 }
 
 interface AuthJwtPayload {

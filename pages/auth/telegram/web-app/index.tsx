@@ -1,75 +1,71 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { Font } from "@bd-dm/ui";
+import { SpinnerIcon } from "@bd-dm/ui";
 import {
 	AuthTelegramWebAppRequest,
+	AuthTelegramWebAppResponse,
 	useAuthTelegramWebAppMutation,
 } from "api/auth";
 import { useAppDispatch } from "store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { isEmpty, isUndefined } from "lodash";
 import { saveAuth } from "utils/auth";
 import { auth } from "store/reducers/auth";
 
-const getInitData = (initDataString: string): AuthTelegramWebAppRequest => {
-	const result: any = {};
+import styles from "./index.module.scss";
+
+const getInitDataFromString = (
+	initDataString: string
+): AuthTelegramWebAppRequest => {
+	const result = {} as AuthTelegramWebAppRequest;
 	const fields = initDataString.split("&");
+
 	fields.forEach((field) => {
 		const [key, value] = field.split("=");
-		result[key] = value;
+		result[key as keyof AuthTelegramWebAppRequest] = value;
 	});
 
 	return result;
 };
 
 const AuthTelegramWebApp: NextPage = () => {
-	const [initData, setInitData] = useState<
-		AuthTelegramWebAppRequest | undefined
-	>();
-	const [authTelegram, { data: authData }] = useAuthTelegramWebAppMutation();
+	const [authTelegram] = useAuthTelegramWebAppMutation();
 	const dispatch = useAppDispatch();
 
-	useEffect(() => {
-		// @ts-ignore
-		const newInitDataString = window.Telegram.WebApp.initData;
-		if (isEmpty(newInitDataString)) {
+	const onInitDataReceived = async (initDataString: string): Promise<void> => {
+		const initData = getInitDataFromString(initDataString);
+		const authDataResponse = await authTelegram(initData);
+		const authData = (authDataResponse as { data: AuthTelegramWebAppResponse })
+			.data;
+
+		if (isUndefined(authData)) {
 			return;
 		}
 
-		const initDataObject = getInitData(newInitDataString);
+		await saveAuth(authData.accessToken);
+		dispatch(auth(authData.accessToken));
 
-		setInitData(initDataObject);
-		authTelegram(initDataObject);
-	}, []);
+		// eslint-disable-next-line no-restricted-globals
+		location.href = `/accounts/${authData.accountUsername}`;
+	};
 
+	// Get auth data from Telegram object and send auth request to API
 	useEffect(() => {
-		(async () => {
-			if (
-				isUndefined(authData) ||
-				isUndefined(authData.accessToken) ||
-				isUndefined(initData)
-			) {
-				return;
-			}
+		const { initData: initDataString } = window.Telegram.WebApp;
+		if (isEmpty(initDataString)) {
+			return;
+		}
 
-			const userString = decodeURIComponent(initData.user);
-			const user = JSON.parse(userString);
-
-			await saveAuth(authData.accessToken);
-			dispatch(auth(authData.accessToken));
-
-			// eslint-disable-next-line no-restricted-globals
-			location.href = `/accounts/${user.username}`;
-		})();
-	}, [authData, initData]);
+		onInitDataReceived(initDataString);
+	}, []);
 
 	return (
 		<>
 			<Head>
 				<script src="https://telegram.org/js/telegram-web-app.js" />
 			</Head>
-			<div>
-				<Font>Wait for redirect...</Font>
+			<div className={styles.container}>
+				<SpinnerIcon />
 			</div>
 		</>
 	);

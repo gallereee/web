@@ -1,0 +1,5 @@
+@use "~@bd-dm/ui/dist/styles/functions";
+
+.container {
+	padding: functions.grid(10);
+}
