@@ -48,4 +48,4 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
-          script: sudo su -c deploy-stage.sh
+          script: sh deploy-stage.sh
