@@ -39,10 +39,7 @@ const PostPage: NextPage = () => {
 	} = post;
 
 	const onDeleteClick = async () => {
-		const isAgree = window.confirm("Вы уверены, что хотите удалить фото?");
-		if (!isAgree) {
-			return;
-		}
+		// TODO: Make a confirmation message
 
 		await deletePost(post.id);
 		await push(`/accounts/${username}`);
