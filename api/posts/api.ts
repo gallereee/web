@@ -7,10 +7,16 @@ const postsApi = api.injectEndpoints({
 		getPost: build.query<PostWithAccount, PostId>({
 			query: (id) => `posts/${id}`,
 		}),
+		deletePost: build.mutation<void, PostId>({
+			query: (id) => ({
+				url: `posts/${id}`,
+				method: "DELETE",
+			}),
+		}),
 	}),
 });
 
-const { useGetPostQuery } = postsApi;
+const { useGetPostQuery, useDeletePostMutation } = postsApi;
 const { getPost } = postsApi.endpoints;
 
-export { getPost, useGetPostQuery };
+export { getPost, useGetPostQuery, useDeletePostMutation };

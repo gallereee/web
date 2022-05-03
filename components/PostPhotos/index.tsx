@@ -15,6 +15,7 @@ const PostPhotos: VFC<PostPhotosProps> = ({ photos }) => {
 			<Carousel
 				showArrows={false}
 				showStatus={false}
+				showIndicators={photos.length > 1}
 				dynamicHeight
 				emulateTouch
 				useKeyboardArrows
