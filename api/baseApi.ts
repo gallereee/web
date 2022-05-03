@@ -1,9 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { config } from "config";
 import { HYDRATE } from "next-redux-wrapper";
+import { RootState } from "store";
 
 const api = createApi({
-	baseQuery: fetchBaseQuery({ baseUrl: `${config.api.host}/` }),
+	baseQuery: fetchBaseQuery({
+		baseUrl: `${config.api.host}/`,
+		prepareHeaders: (headers, { getState }) => {
+			const { accessToken } = (getState() as RootState).auth;
+			if (accessToken) {
+				headers.set("authentication", `Bearer ${accessToken}`);
+			}
+
+			return headers;
+		},
+	}),
 	endpoints: () => ({}),
 	extractRehydrationInfo: (action, { reducerPath }) => {
 		if (action.type === HYDRATE) {

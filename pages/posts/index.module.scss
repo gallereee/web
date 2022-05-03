@@ -10,3 +10,7 @@
 	margin-left: functions.grid(4);
 	@include mixins.themed("color", "accent-disabled");
 }
+
+.dropdown {
+	z-index: 1;
+}
