@@ -40,3 +40,12 @@ jobs:
             github_token=${{ secrets.GITHUB_TOKEN }}
             api_host=https://api.stage.gallereee.site/v1
             bot_url=https://t.me/gallereee_stage_bot
+      -
+        name: Deploy on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: sudo su -c deploy-stage.sh
