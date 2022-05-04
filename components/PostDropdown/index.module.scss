@@ -1,0 +1,14 @@
+@use "~@bd-dm/ui/dist/styles/functions";
+
+.dropdown {
+	z-index: 1;
+	margin-left: functions.grid(4);
+}
+
+.delete-confirm-modal {
+	z-index: 2;
+}
+
+.modal-buttons {
+	gap: functions.grid(4);
+}
