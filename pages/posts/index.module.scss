@@ -11,6 +11,7 @@
 	@include mixins.themed("color", "accent-disabled");
 }
 
-.dropdown {
-	z-index: 1;
+.username, .date {
+	word-break: break-all;
 }
+
