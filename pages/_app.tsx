@@ -1,3 +1,4 @@
+import "../runtime-polyfills";
 import "@bd-dm/ui/dist/index.css";
 import "@bd-dm/ui/dist/globals.css";
 import "../styles/index.css";
