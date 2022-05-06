@@ -12,6 +12,7 @@ import { isEmpty, isUndefined } from "lodash";
 import { saveAuth } from "utils/auth";
 import { auth } from "store/reducers/auth";
 
+import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 
 const getInitDataFromString = (
@@ -30,6 +31,7 @@ const getInitDataFromString = (
 
 const AuthTelegramWebApp: NextPage = () => {
 	const [authTelegram] = useAuthTelegramWebAppMutation();
+	const { push } = useRouter();
 	const dispatch = useAppDispatch();
 
 	const onInitDataReceived = async (initDataString: string): Promise<void> => {
@@ -45,8 +47,7 @@ const AuthTelegramWebApp: NextPage = () => {
 		await saveAuth(authData.accessToken);
 		dispatch(auth(authData.accessToken));
 
-		// eslint-disable-next-line no-restricted-globals
-		location.href = `/accounts/${authData.accountUsername}`;
+		await push(`/accounts/${authData.accountUsername}`);
 	};
 
 	// Get auth data from Telegram object and send auth request to API
