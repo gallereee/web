@@ -12,7 +12,7 @@ import { AuthProvider } from "components/AuthProvider";
 import styles from "./_app.module.scss";
 
 // eslint-disable-next-line no-undef
-Object.assign(globalThis, {
+Object.assign(typeof globalThis === "undefined" ? {} : globalThis, {
 	AbortController,
 });
 

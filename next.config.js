@@ -23,4 +23,11 @@ const nextConfig = {
 	},
 };
 
-module.exports = nextConfig;
+const withTM = require("next-transpile-modules")([
+	"abort-controller",
+	"@bd-dm/ui",
+	"nanoid",
+	"event-target-shim",
+]);
+
+module.exports = withTM(nextConfig);
