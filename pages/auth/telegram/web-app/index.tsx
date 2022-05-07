@@ -13,7 +13,7 @@ import { saveAuth } from "utils/auth";
 import { auth } from "store/reducers/auth";
 
 import { useRouter } from "next/router";
-import { Account } from "api";
+import { Account, Post } from "api";
 import styles from "./index.module.scss";
 
 const getInitDataFromString = (
@@ -32,11 +32,13 @@ const getInitDataFromString = (
 
 enum AuthTelegramWebAppFor {
 	MY_GALLEREEE = "my-gallereee",
+	SHOW_POST = "show-post",
 }
 
 const getAuthForPaths = {
 	[AuthTelegramWebAppFor.MY_GALLEREEE]: (username: Account["username"]) =>
 		`/accounts/${username}`,
+	[AuthTelegramWebAppFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
 };
 
 const AuthTelegramWebApp: NextPage = () => {
@@ -59,8 +61,14 @@ const AuthTelegramWebApp: NextPage = () => {
 
 		// Redirect
 		const typedFor = query.for as AuthTelegramWebAppFor;
-		let redirectPath = "";
+		let redirectPath;
 		switch (typedFor) {
+			case AuthTelegramWebAppFor.SHOW_POST: {
+				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.SHOW_POST](
+					query["post-id"] as string
+				);
+				break;
+			}
 			case AuthTelegramWebAppFor.MY_GALLEREEE:
 			default: {
 				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.MY_GALLEREEE](
