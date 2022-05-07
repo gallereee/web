@@ -13,6 +13,7 @@ import { saveAuth } from "utils/auth";
 import { auth } from "store/reducers/auth";
 
 import { useRouter } from "next/router";
+import { Account } from "api";
 import styles from "./index.module.scss";
 
 const getInitDataFromString = (
@@ -29,9 +30,18 @@ const getInitDataFromString = (
 	return result;
 };
 
+enum AuthTelegramWebAppFor {
+	MY_GALLEREEE = "my-gallereee",
+}
+
+const getAuthForPaths = {
+	[AuthTelegramWebAppFor.MY_GALLEREEE]: (username: Account["username"]) =>
+		`/accounts/${username}`,
+};
+
 const AuthTelegramWebApp: NextPage = () => {
 	const [authTelegram] = useAuthTelegramWebAppMutation();
-	const { push } = useRouter();
+	const { push, query } = useRouter();
 	const dispatch = useAppDispatch();
 
 	const onInitDataReceived = async (initDataString: string): Promise<void> => {
@@ -47,7 +57,20 @@ const AuthTelegramWebApp: NextPage = () => {
 		await saveAuth(authData.accessToken);
 		dispatch(auth(authData.accessToken));
 
-		await push(`/accounts/${authData.accountUsername}`);
+		// Redirect
+		const typedFor = query.for as AuthTelegramWebAppFor;
+		let redirectPath = "";
+		switch (typedFor) {
+			case AuthTelegramWebAppFor.MY_GALLEREEE:
+			default: {
+				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.MY_GALLEREEE](
+					authData.accountUsername
+				);
+				break;
+			}
+		}
+
+		await push(redirectPath);
 	};
 
 	// Get auth data from Telegram object and send auth request to API
