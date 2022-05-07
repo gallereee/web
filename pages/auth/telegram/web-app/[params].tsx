@@ -30,24 +30,24 @@ const getInitDataFromString = (
 	return result;
 };
 
-enum AuthTelegramWebAppFor {
+enum AuthFor {
 	MY_GALLEREEE = "my-gallereee",
 	SHOW_POST = "show-post",
 }
 
-interface AuthTelegramWebAppParams {
-	for: AuthTelegramWebAppFor;
+interface AuthParams {
+	for: AuthFor;
 	"post-id"?: string;
 }
 
-const getAuthForPaths = {
-	[AuthTelegramWebAppFor.MY_GALLEREEE]: (username: Account["username"]) =>
+const authPathGetters = {
+	[AuthFor.MY_GALLEREEE]: (username: Account["username"]) =>
 		`/accounts/${username}`,
-	[AuthTelegramWebAppFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
+	[AuthFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
 };
 
 const defaultParams = JSON.stringify({
-	for: AuthTelegramWebAppFor.MY_GALLEREEE,
+	for: AuthFor.MY_GALLEREEE,
 });
 
 const AuthTelegramWebApp: NextPage = () => {
@@ -74,21 +74,24 @@ const AuthTelegramWebApp: NextPage = () => {
 		// Redirect
 		const typedParams = JSON.parse(
 			(params as string) ?? defaultParams
-		) as AuthTelegramWebAppParams;
+		) as AuthParams;
 
 		let redirectPath;
 		switch (typedParams.for) {
-			case AuthTelegramWebAppFor.SHOW_POST: {
-				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.SHOW_POST](
+			case AuthFor.SHOW_POST: {
+				redirectPath = authPathGetters[AuthFor.SHOW_POST](
 					typedParams["post-id"] as string
 				);
 				break;
 			}
-			case AuthTelegramWebAppFor.MY_GALLEREEE:
-			default: {
-				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.MY_GALLEREEE](
+			case AuthFor.MY_GALLEREEE: {
+				redirectPath = authPathGetters[AuthFor.MY_GALLEREEE](
 					authData.accountUsername
 				);
+				break;
+			}
+			default: {
+				redirectPath = "/";
 				break;
 			}
 		}
@@ -99,12 +102,12 @@ const AuthTelegramWebApp: NextPage = () => {
 	// Get auth data from Telegram object and send auth request to API
 	useEffect(() => {
 		const { initData: initDataString } = window.Telegram.WebApp;
-		if (isEmpty(initDataString)) {
+		if (isEmpty(initDataString) || isUndefined(params)) {
 			return;
 		}
 
 		onInitDataReceived(initDataString);
-	}, []);
+	}, [params]);
 
 	return (
 		<>
