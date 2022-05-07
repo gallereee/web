@@ -35,15 +35,27 @@ enum AuthTelegramWebAppFor {
 	SHOW_POST = "show-post",
 }
 
+interface AuthTelegramWebAppParams {
+	for: AuthTelegramWebAppFor;
+	"post-id"?: string;
+}
+
 const getAuthForPaths = {
 	[AuthTelegramWebAppFor.MY_GALLEREEE]: (username: Account["username"]) =>
 		`/accounts/${username}`,
 	[AuthTelegramWebAppFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
 };
 
+const defaultParams = JSON.stringify({
+	for: AuthTelegramWebAppFor.MY_GALLEREEE,
+});
+
 const AuthTelegramWebApp: NextPage = () => {
 	const [authTelegram] = useAuthTelegramWebAppMutation();
-	const { push, query } = useRouter();
+	const {
+		push,
+		query: { params },
+	} = useRouter();
 	const dispatch = useAppDispatch();
 
 	const onInitDataReceived = async (initDataString: string): Promise<void> => {
@@ -60,12 +72,15 @@ const AuthTelegramWebApp: NextPage = () => {
 		dispatch(auth(authData.accessToken));
 
 		// Redirect
-		const typedFor = query.for as AuthTelegramWebAppFor;
+		const typedParams = JSON.parse(
+			(params as string) ?? defaultParams
+		) as AuthTelegramWebAppParams;
+
 		let redirectPath;
-		switch (typedFor) {
+		switch (typedParams.for) {
 			case AuthTelegramWebAppFor.SHOW_POST: {
 				redirectPath = getAuthForPaths[AuthTelegramWebAppFor.SHOW_POST](
-					query["post-id"] as string
+					typedParams["post-id"] as string
 				);
 				break;
 			}
