@@ -30,24 +30,24 @@ const getInitDataFromString = (
 	return result;
 };
 
-enum AuthFor {
+enum WebAppAuthFor {
 	MY_GALLEREEE = "my-gallereee",
 	SHOW_POST = "show-post",
 }
 
-interface AuthParams {
-	for: AuthFor;
+interface WebAppAuthParams {
+	for: WebAppAuthFor;
 	"post-id"?: string;
 }
 
 const authPathGetters = {
-	[AuthFor.MY_GALLEREEE]: (username: Account["username"]) =>
+	[WebAppAuthFor.MY_GALLEREEE]: (username: Account["username"]) =>
 		`/accounts/${username}`,
-	[AuthFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
+	[WebAppAuthFor.SHOW_POST]: (postId: Post["id"]) => `/posts/${postId}`,
 };
 
 const defaultParams = JSON.stringify({
-	for: AuthFor.MY_GALLEREEE,
+	for: WebAppAuthFor.MY_GALLEREEE,
 });
 
 const AuthTelegramWebApp: NextPage = () => {
@@ -74,18 +74,18 @@ const AuthTelegramWebApp: NextPage = () => {
 		// Redirect
 		const typedParams = JSON.parse(
 			(params as string) ?? defaultParams
-		) as AuthParams;
+		) as WebAppAuthParams;
 
 		let redirectPath;
 		switch (typedParams.for) {
-			case AuthFor.SHOW_POST: {
-				redirectPath = authPathGetters[AuthFor.SHOW_POST](
+			case WebAppAuthFor.SHOW_POST: {
+				redirectPath = authPathGetters[WebAppAuthFor.SHOW_POST](
 					typedParams["post-id"] as string
 				);
 				break;
 			}
-			case AuthFor.MY_GALLEREEE: {
-				redirectPath = authPathGetters[AuthFor.MY_GALLEREEE](
+			case WebAppAuthFor.MY_GALLEREEE: {
+				redirectPath = authPathGetters[WebAppAuthFor.MY_GALLEREEE](
 					authData.accountUsername
 				);
 				break;
