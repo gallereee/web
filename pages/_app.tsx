@@ -1,3 +1,4 @@
+import "../runtime-polyfills";
 import "@bd-dm/ui/dist/index.css";
 import "@bd-dm/ui/dist/globals.css";
 import "../styles/index.css";
@@ -11,7 +12,7 @@ import { AuthProvider } from "components/AuthProvider";
 import styles from "./_app.module.scss";
 
 // eslint-disable-next-line no-undef
-Object.assign(globalThis, {
+Object.assign(typeof globalThis === "undefined" ? {} : globalThis, {
 	AbortController,
 });
 

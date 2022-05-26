@@ -1,8 +1,6 @@
 import { VFC } from "react";
 import { AnchorButton, Column, Font } from "@bd-dm/ui";
 import { LogoIcon } from "components/icons/LogoIcon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
 import { config } from "config";
 import styles from "./index.module.scss";
 
@@ -41,12 +39,6 @@ const Landing: VFC = () => {
 						className={styles["action-button"]}
 					>
 						Создать свою галерею{" "}
-						<FontAwesomeIcon
-							icon={faArrowRight}
-							className={styles["action-button-icon"]}
-							width="1em"
-							height="1em"
-						/>
 					</AnchorButton>
 				</Column>
 			</Column>
