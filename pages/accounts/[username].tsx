@@ -67,6 +67,7 @@ const getServerSideProps = storeWrapper.getServerSideProps(
 			store.dispatch(getAccountPosts.initiate(username));
 		}
 		const [getAccountResult] = await Promise.all<any>(
+			// @ts-ignore
 			getRunningOperationPromises()
 		);
 

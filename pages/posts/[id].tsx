@@ -64,6 +64,7 @@ const getServerSideProps = storeWrapper.getServerSideProps(
 			store.dispatch(getPost.initiate(id));
 		}
 		const [getPostResult] = await Promise.all<any>(
+			// @ts-ignore
 			getRunningOperationPromises()
 		);
 
