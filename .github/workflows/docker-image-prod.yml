@@ -32,7 +32,7 @@ jobs:
           tags: ghcr.io/gallereee/web:prod
           build-args: |
             github_token=${{ secrets.GITHUB_TOKEN }}
-            api_host=https://api.gallereee.site/v1
+            api_host=https://api.glr.bd-dm.ru/v1
             bot_url=https://t.me/gallereee_bot
       -
         name: Deploy on server
